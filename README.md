@@ -23,6 +23,6 @@ Erika created all artwork using [Piskel](https://www.piskelapp.com/user/50590614
 
 ![Piskel](assets/erika-piskel.png?raw=true)
 
-Blossom Sea written in [Phaser](https://phaser.io) and based on code from http://www.lessmilk.com/tutorial/flappy-bird-phaser-1 . The swipe up and swipe down code came from https://phasergames.com/faking-a-swipe-in-phaser/
+Blossom Sea is written in [Phaser](https://phaser.io) and based on code from http://www.lessmilk.com/tutorial/flappy-bird-phaser-1 . The swipe up and swipe down code came from https://phasergames.com/faking-a-swipe-in-phaser/
 
 Blossom Sea is a work in progress. If you have ideas for us, please feel free to open an issue at https://github.com/pdurbin/blossom-sea/issues

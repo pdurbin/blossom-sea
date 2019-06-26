@@ -17,6 +17,7 @@ var mainState = {
 
         game.load.image('bird', 'assets/blossom.png');
         game.load.image('pipe', 'assets/fishy.png');
+        game.load.image('floor', 'assets/floor.gif');
 
     },
 
@@ -24,12 +25,18 @@ var mainState = {
         game.physics.startSystem(Phaser.Physics.ARCADE);
 
         this.pipes = game.add.group();
+        this.floors = game.add.group();
         this.timer = game.time.events.loop(1500, this.addRowOfPipes, this);
+        this.timer = game.time.events.loop(1000, this.addRowOfSeaweed, this);
 
         this.bird = game.add.sprite(10, 245, 'bird');
         this.bird.scale.setTo(3.0, 3.0);
         game.physics.arcade.enable(this.bird);
         this.bird.body.gravity.y = 250;
+
+        for (var i = 0; i < 6; i++) {
+            this.addOneSeaweed(i * 190, 400);
+        }
 
         // New anchor position
         this.bird.anchor.setTo(-0.2, 0.5);
@@ -118,6 +125,11 @@ var mainState = {
         this.pipes.forEach(function(p) {
             p.body.velocity.x = 0;
         }, this);
+
+        // Go through all the floors, and stop their movement
+        this.floors.forEach(function(p) {
+            p.body.velocity.x = 0;
+        }, this);
     },
 
     restartGame: function() {
@@ -133,6 +145,7 @@ var mainState = {
         pipe.body.velocity.x = -200;
         pipe.checkWorldBounds = true;
         pipe.outOfBoundsKill = true;
+
     },
 
     addRowOfPipes: function() {
@@ -141,8 +154,21 @@ var mainState = {
         this.score += 1;
     },
 
+    addOneSeaweed: function(x, y) {
+        var floor = game.add.sprite(x, y, 'floor');
+        floor.scale.setTo(6.5, 6.5);
+        this.floors.add(floor);
+        game.physics.arcade.enable(floor);
 
+        // Make the seaweed a little slower than the fish.
+        floor.body.velocity.x = -170;
+        floor.checkWorldBounds = true;
+        floor.outOfBoundsKill = true;
+    },
 
+    addRowOfSeaweed: function() {
+        this.addOneSeaweed(800, 400);
+    },
 
     mouseDown: function() {
         //set the mouseIsDown to true

@@ -18,6 +18,7 @@ var mainState = {
         game.load.image('bird', 'assets/blossom.png');
         game.load.image('pipe', 'assets/fishy.png');
         game.load.image('floor', 'assets/floor.gif');
+        game.load.image('flipy', 'assets/flipy.png');
 
     },
 
@@ -137,8 +138,14 @@ var mainState = {
     },
 
     addOnePipe: function(x, y) {
-        var pipe = game.add.sprite(x, y, 'pipe');
-        pipe.scale.setTo(0.6, 0.6);
+        var pipe;
+        if (Math.round(y) % 2 == 0) {
+            pipe = game.add.sprite(x, y, 'flipy');
+            pipe.scale.setTo(1.7, 1.7);
+        } else {
+            pipe = game.add.sprite(x, y, 'pipe');
+            pipe.scale.setTo(0.6, 0.6);
+	}
         this.pipes.add(pipe);
         game.physics.arcade.enable(pipe);
 

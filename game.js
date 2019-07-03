@@ -19,6 +19,7 @@ var mainState = {
         game.load.image('pipe', 'assets/fishy.png');
         game.load.image('floor', 'assets/floor.gif');
         game.load.image('flipy', 'assets/flipy.png');
+        game.load.image('wave', 'assets/wave.png');
 
     },
 
@@ -27,8 +28,10 @@ var mainState = {
 
         this.pipes = game.add.group();
         this.floors = game.add.group();
+        this.waves = game.add.group();
         this.timer = game.time.events.loop(1500, this.addRowOfPipes, this);
         this.timer = game.time.events.loop(1000, this.addRowOfSeaweed, this);
+        this.timer = game.time.events.loop(1000, this.addRowOfWaves, this);
 
         this.bird = game.add.sprite(10, 245, 'bird');
         this.bird.scale.setTo(3.0, 3.0);
@@ -38,6 +41,11 @@ var mainState = {
         for (var i = 0; i < 6; i++) {
             this.addOneSeaweed(i * 190, 400);
         }
+
+        for (var i = 0; i < 5; i++) {
+            this.addOneWave(i * 170, 0);
+        }
+        this.addOneWave(800, 0);
 
         // New anchor position
         this.bird.anchor.setTo(-0.2, 0.5);
@@ -131,6 +139,11 @@ var mainState = {
         this.floors.forEach(function(p) {
             p.body.velocity.x = 0;
         }, this);
+
+        // Go through all the waves and stop their movement
+        this.waves.forEach(function(p) {
+            p.body.velocity.x = 0;
+        }, this);
     },
 
     restartGame: function() {
@@ -175,6 +188,24 @@ var mainState = {
 
     addRowOfSeaweed: function() {
         this.addOneSeaweed(800, 400);
+    },
+
+    addOneWave: function(x, y) {
+        var wave = game.add.sprite(x, y, 'wave');
+        //wave.scale.setTo(6.5, 6.5);
+        wave.scale.setTo(5.5, 5.5);
+        this.waves.add(wave);
+        game.physics.arcade.enable(wave);
+
+        // Make the wave a little slower than the fish.
+        wave.body.velocity.x = -170;
+        wave.checkWorldBounds = true;
+        wave.outOfBoundsKill = true;
+    },
+
+    addRowOfWaves: function() {
+        //this.addOneWave(800, 0);
+        this.addOneWave(800, 0);
     },
 
     mouseDown: function() {

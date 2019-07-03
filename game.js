@@ -58,7 +58,7 @@ var mainState = {
         game.input.onDown.add(this.dive, this);
 
         this.score = 0;
-        this.labelScore = game.add.text(20, 20, "0", {
+        this.labelScore = game.add.text(20, 30, "0", {
             font: "30px Arial",
             fill: "#ffffff"
         });
